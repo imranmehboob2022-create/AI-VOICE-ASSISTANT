@@ -1,50 +1,113 @@
+```html
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>AI Chatbot</title>
 </head>
 
 <body>
 
-<h1>AI Chatbot</h1>
+    <h1>AI Chatbot</h1>
 
-<input id="msg" type="text">
+    <input
+        id="msg"
+        type="text"
+        placeholder="Type your message..."
+    >
 
-<button onclick="send()">Send</button>
+    <button onclick="send()">Send</button>
 
-<p id="reply"></p>
+    <p id="reply"></p>
 
-<script>
+    <audio id="voice" controls></audio>
 
-async function send(){
+    <script>
 
-const message=document.getElementById("msg").value;
+        async function send() {
 
-const res=await fetch("/chat",{
+            const messageInput = document.getElementById("msg");
+            const replyElement = document.getElementById("reply");
+            const voice = document.getElementById("voice");
 
-method:"POST",
+            const message = messageInput.value.trim();
 
-headers:{
+            if (!message) {
+                return;
+            }
 
-"Content-Type":"application/json"
+            replyElement.innerText = "Thinking...";
 
-},
+            try {
 
-body:JSON.stringify({
+                const res = await fetch("/chat", {
 
-message:message
+                    method: "POST",
 
-})
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
 
-});
+                    body: JSON.stringify({
+                        message: message
+                    })
 
-const data=await res.json();
+                });
 
-document.getElementById("reply").innerHTML=data.reply;
+                const data = await res.json();
 
-}
+                if (!res.ok) {
+                    throw new Error(data.error || "Something went wrong");
+                }
 
-</script>
+                // Show AI response
+                replyElement.innerText = data.reply;
+
+                // Play AI voice
+                if (data.audio_url) {
+
+                    voice.src = data.audio_url;
+
+                    voice.style.display = "block";
+
+                    try {
+                        await voice.play();
+                    } catch (error) {
+                        console.log("Autoplay blocked. Press Play.");
+                    }
+
+                }
+
+                // Clear input
+                messageInput.value = "";
+
+            } catch (error) {
+
+                console.error(error);
+
+                replyElement.innerText =
+                    "Error: " + error.message;
+
+            }
+
+        }
+
+
+        // Press Enter to send
+        document.getElementById("msg").addEventListener("keydown", function(event) {
+
+            if (event.key === "Enter") {
+                send();
+            }
+
+        });
+
+    </script>
 
 </body>
+
 </html>
+```

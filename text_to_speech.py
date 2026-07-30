@@ -1,35 +1,40 @@
-import asyncio
 import os
-import tempfile
+import uuid
 import edge_tts
-import pygame
 
-pygame.mixer.init()
+VOICE = "en-US-AriaNeural"
 
-VOICE = "en-US-AriaNeural"   # Female voice
-# Hindi: "hi-IN-SwaraNeural"
-# Urdu: "ur-PK-UzmaNeural"
+# Hindi:
+# VOICE = "hi-IN-SwaraNeural"
 
-
-async def _speak(text):
-    temp_file = os.path.join(tempfile.gettempdir(), "voice.mp3")
-
-    communicate = edge_tts.Communicate(text, VOICE)
-    await communicate.save(temp_file)
-
-    pygame.mixer.music.load(temp_file)
-    pygame.mixer.music.play()
-
-    while pygame.mixer.music.get_busy():
-        await asyncio.sleep(0.1)
-
-    pygame.mixer.music.unload()
-
-    try:
-        os.remove(temp_file)
-    except:
-        pass
+# Urdu:
+# VOICE = "ur-PK-UzmaNeural"
 
 
 def speak(text):
-    asyncio.run(_speak(str(text)))
+    """
+    Generate speech audio using Edge TTS.
+    Returns the generated MP3 file path.
+    """
+
+    text = str(text).strip()
+
+    if not text:
+        return None
+
+    # Create audio folder inside static
+    audio_folder = os.path.join("static", "audio")
+    os.makedirs(audio_folder, exist_ok=True)
+
+    # Unique filename for every response
+    filename = f"{uuid.uuid4().hex}.mp3"
+    file_path = os.path.join(audio_folder, filename)
+
+    async def generate():
+        communicate = edge_tts.Communicate(text, VOICE)
+        await communicate.save(file_path)
+
+    import asyncio
+    asyncio.run(generate())
+
+    return file_path
