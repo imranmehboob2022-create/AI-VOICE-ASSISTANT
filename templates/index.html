@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>IMRAN AI Assistant</title>
+    <title>IMRAN AI ASSISTANT</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,6 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
     <style>
+
         * {
             margin: 0;
             padding: 0;
@@ -24,13 +26,15 @@
             background: #050816;
 
             background-image:
-                radial-gradient(circle at top, rgba(0, 255, 255, 0.15), transparent 35%),
-                radial-gradient(circle at bottom right, rgba(120, 0, 255, 0.12), transparent 35%);
+                radial-gradient(circle at top, rgba(0,255,255,0.15), transparent 35%),
+                radial-gradient(circle at bottom right, rgba(120,0,255,0.12), transparent 35%);
 
             color: white;
+
             display: flex;
             justify-content: center;
             align-items: center;
+
             padding: 20px;
         }
 
@@ -42,14 +46,16 @@
             display: flex;
             flex-direction: column;
 
-            background: rgba(10, 15, 35, 0.72);
-            border: 1px solid rgba(0, 255, 255, 0.25);
+            background: rgba(10,15,35,0.72);
+
+            border: 1px solid rgba(0,255,255,0.25);
             border-radius: 25px;
 
             backdrop-filter: blur(18px);
+
             box-shadow:
-                0 0 40px rgba(0, 255, 255, 0.08),
-                inset 0 0 30px rgba(255, 255, 255, 0.02);
+                0 0 40px rgba(0,255,255,0.08),
+                inset 0 0 30px rgba(255,255,255,0.02);
 
             overflow: hidden;
         }
@@ -57,7 +63,8 @@
         .header {
             padding: 25px;
             text-align: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+            border-bottom: 1px solid rgba(255,255,255,0.08);
         }
 
         .header h1 {
@@ -76,7 +83,9 @@
             display: inline-flex;
             align-items: center;
             gap: 7px;
+
             margin-top: 10px;
+
             font-size: 11px;
             opacity: 0.75;
         }
@@ -84,15 +93,21 @@
         .dot {
             width: 8px;
             height: 8px;
+
             border-radius: 50%;
+
             background: #00ff88;
+
             box-shadow: 0 0 10px #00ff88;
         }
 
         #chat-box {
             flex: 1;
+
             padding: 25px;
+
             overflow-y: auto;
+
             scroll-behavior: smooth;
         }
 
@@ -111,40 +126,54 @@
 
         .bubble {
             max-width: 75%;
+
             padding: 13px 17px;
+
             border-radius: 18px;
+
             line-height: 1.6;
             font-size: 14px;
+
             white-space: pre-wrap;
             word-wrap: break-word;
         }
 
         .user .bubble {
-            background: rgba(0, 200, 255, 0.14);
-            border: 1px solid rgba(0, 220, 255, 0.3);
+            background: rgba(0,200,255,0.14);
+
+            border: 1px solid rgba(0,220,255,0.3);
+
             border-bottom-right-radius: 5px;
         }
 
         .bot .bubble {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255,255,255,0.06);
+
+            border: 1px solid rgba(255,255,255,0.1);
+
             border-bottom-left-radius: 5px;
         }
 
         .label {
             font-size: 10px;
+
             opacity: 0.5;
+
             margin-bottom: 5px;
+
             font-family: 'Orbitron', sans-serif;
         }
 
         .input-area {
             display: flex;
+
             gap: 10px;
+
             padding: 18px;
 
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            background: rgba(0, 0, 0, 0.18);
+            border-top: 1px solid rgba(255,255,255,0.08);
+
+            background: rgba(0,0,0,0.18);
         }
 
         #msg {
@@ -153,35 +182,44 @@
 
             padding: 14px 17px;
 
-            border: 1px solid rgba(0, 220, 255, 0.2);
+            border: 1px solid rgba(0,220,255,0.2);
+
             border-radius: 14px;
 
             outline: none;
+
             color: white;
-            background: rgba(255, 255, 255, 0.05);
+
+            background: rgba(255,255,255,0.05);
 
             font-family: 'Poppins', sans-serif;
+
             font-size: 14px;
         }
 
         #msg::placeholder {
-            color: rgba(255, 255, 255, 0.4);
+            color: rgba(255,255,255,0.4);
         }
 
         #msg:focus {
-            border-color: rgba(0, 220, 255, 0.6);
-            box-shadow: 0 0 15px rgba(0, 220, 255, 0.1);
+            border-color: rgba(0,220,255,0.6);
+
+            box-shadow: 0 0 15px rgba(0,220,255,0.1);
         }
 
         button {
             border: none;
+
             border-radius: 14px;
-            padding: 0 22px;
+
+            padding: 0 20px;
 
             color: white;
-            background: linear-gradient(135deg, #007bff, #6f00ff);
+
+            background: linear-gradient(135deg,#007bff,#6f00ff);
 
             font-family: 'Poppins', sans-serif;
+
             font-weight: 500;
 
             cursor: pointer;
@@ -191,13 +229,42 @@
 
         button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 0 20px rgba(0, 150, 255, 0.35);
+
+            box-shadow: 0 0 20px rgba(0,150,255,0.35);
         }
 
         button:disabled {
             opacity: 0.5;
+
             cursor: not-allowed;
+
             transform: none;
+        }
+
+        /* MIC BUTTON */
+
+        #micBtn {
+            width: 52px;
+
+            padding: 0;
+
+            font-size: 20px;
+
+            background: rgba(255,255,255,0.08);
+
+            border: 1px solid rgba(0,220,255,0.25);
+        }
+
+        #micBtn:hover {
+            background: rgba(0,220,255,0.15);
+        }
+
+        #micBtn.listening {
+            background: rgba(255,50,80,0.25);
+
+            border-color: rgba(255,50,80,0.7);
+
+            box-shadow: 0 0 20px rgba(255,50,80,0.35);
         }
 
         #voice {
@@ -230,91 +297,160 @@
 
             .input-area {
                 padding: 12px;
+                gap: 6px;
+            }
+
+            #micBtn {
+                width: 48px;
             }
 
             button {
-                padding: 0 16px;
+                padding: 0 15px;
             }
         }
+
     </style>
+
 </head>
+
 
 <body>
 
+
 <div class="container">
 
+
     <div class="header">
+
         <h1>IMRAN AI ASSISTANT</h1>
 
         <p>Intelligent AI • Voice Enabled</p>
 
         <div class="status">
+
             <span class="dot"></span>
+
             AI ONLINE
+
         </div>
+
     </div>
 
 
     <div id="chat-box">
 
         <div class="message bot">
+
             <div>
-                <div class="label">AI ASSISTANT</div>
+
+                <div class="label">
+                    AI ASSISTANT
+                </div>
 
                 <div class="bubble">
                     Hello! 👋 I'm your AI Assistant. How can I help you?
                 </div>
+
             </div>
+
         </div>
 
     </div>
 
 
+    <!-- INPUT AREA -->
+
     <div class="input-area">
+
 
         <input
             id="msg"
             type="text"
-            placeholder="Ask me anything..."
+            placeholder="Type or speak your message..."
             autocomplete="off"
         >
 
-        <button id="sendBtn" onclick="send()">
+
+        <!-- MIC -->
+
+        <button
+            id="micBtn"
+            type="button"
+            title="Speak"
+            onclick="startListening()"
+        >
+            🎤
+        </button>
+
+
+        <!-- SEND -->
+
+        <button
+            id="sendBtn"
+            type="button"
+            onclick="send()"
+        >
             Send
         </button>
 
+
     </div>
+
 
 </div>
 
+
+<!-- AI VOICE PLAYER -->
 
 <audio id="voice"></audio>
 
 
 <script>
 
+
+/* =========================
+   SEND MESSAGE
+========================= */
+
+
 async function send() {
 
+
     const input = document.getElementById("msg");
+
     const chatBox = document.getElementById("chat-box");
+
     const sendBtn = document.getElementById("sendBtn");
 
+
     const message = input.value.trim();
+
 
     if (!message) {
         return;
     }
 
 
-    // USER MESSAGE
+    /* USER MESSAGE */
 
     chatBox.innerHTML += `
+
         <div class="message user">
+
             <div>
-                <div class="label">YOU</div>
-                <div class="bubble">${escapeHtml(message)}</div>
+
+                <div class="label">
+                    YOU
+                </div>
+
+                <div class="bubble">
+                    ${escapeHtml(message)}
+                </div>
+
             </div>
+
         </div>
+
     `;
 
 
@@ -323,18 +459,29 @@ async function send() {
     sendBtn.disabled = true;
 
 
-    // THINKING
+    /* THINKING */
 
     const thinking = document.createElement("div");
 
     thinking.className = "message bot";
 
+
     thinking.innerHTML = `
+
         <div>
-            <div class="label">AI ASSISTANT</div>
-            <div class="bubble typing">Thinking...</div>
+
+            <div class="label">
+                AI ASSISTANT
+            </div>
+
+            <div class="bubble typing">
+                Thinking...
+            </div>
+
         </div>
+
     `;
+
 
     chatBox.appendChild(thinking);
 
@@ -343,16 +490,21 @@ async function send() {
 
     try {
 
+
         const res = await fetch("/chat", {
 
             method: "POST",
 
             headers: {
+
                 "Content-Type": "application/json"
+
             },
 
             body: JSON.stringify({
+
                 message: message
+
             })
 
         });
@@ -365,58 +517,99 @@ async function send() {
 
 
         if (!res.ok) {
-            throw new Error(data.error || "Something went wrong");
+
+            throw new Error(
+                data.error || "Something went wrong"
+            );
+
         }
 
 
-        // AI RESPONSE
+        /* AI RESPONSE */
 
         chatBox.innerHTML += `
+
             <div class="message bot">
+
                 <div>
-                    <div class="label">AI ASSISTANT</div>
-                    <div class="bubble">${escapeHtml(data.reply)}</div>
+
+                    <div class="label">
+                        AI ASSISTANT
+                    </div>
+
+                    <div class="bubble">
+                        ${escapeHtml(data.reply)}
+                    </div>
+
                 </div>
+
             </div>
+
         `;
 
 
         chatBox.scrollTop = chatBox.scrollHeight;
 
 
-        // PLAY AI VOICE
+        /* AI VOICE */
 
         if (data.audio_url) {
 
-            const voice = document.getElementById("voice");
+
+            const voice =
+                document.getElementById("voice");
+
 
             voice.src = data.audio_url;
 
+
+            voice.load();
+
+
             try {
+
                 await voice.play();
+
             }
 
             catch (error) {
-                console.log("Browser blocked autoplay:", error);
+
+                console.log(
+                    "Browser autoplay blocked:",
+                    error
+                );
+
             }
 
         }
+
 
     }
 
     catch (error) {
 
+
         thinking.remove();
 
+
         chatBox.innerHTML += `
+
             <div class="message bot">
+
                 <div>
-                    <div class="label">ERROR</div>
+
+                    <div class="label">
+                        ERROR
+                    </div>
+
                     <div class="bubble">
                         ${escapeHtml(error.message)}
                     </div>
+
                 </div>
+
             </div>
+
         `;
 
     }
@@ -427,36 +620,185 @@ async function send() {
     input.focus();
 
     chatBox.scrollTop = chatBox.scrollHeight;
+
 }
 
 
-/*
-    Prevent HTML injection
-*/
+
+/* =========================
+   MICROPHONE / SPEECH INPUT
+========================= */
+
+
+const SpeechRecognition =
+    window.SpeechRecognition ||
+    window.webkitSpeechRecognition;
+
+
+let recognition = null;
+
+
+if (SpeechRecognition) {
+
+
+    recognition = new SpeechRecognition();
+
+
+    recognition.continuous = false;
+
+    recognition.interimResults = false;
+
+    recognition.lang = "en-US";
+
+
+    recognition.onstart = function() {
+
+
+        const micBtn =
+            document.getElementById("micBtn");
+
+
+        micBtn.classList.add("listening");
+
+        micBtn.innerHTML = "🔴";
+
+    };
+
+
+    recognition.onresult = function(event) {
+
+
+        const text =
+            event.results[0][0].transcript;
+
+
+        document.getElementById("msg").value =
+            text;
+
+
+        /* Automatically send */
+
+        send();
+
+    };
+
+
+    recognition.onend = function() {
+
+
+        const micBtn =
+            document.getElementById("micBtn");
+
+
+        micBtn.classList.remove("listening");
+
+        micBtn.innerHTML = "🎤";
+
+    };
+
+
+    recognition.onerror = function(event) {
+
+
+        console.log(
+            "Speech recognition error:",
+            event.error
+        );
+
+
+        const micBtn =
+            document.getElementById("micBtn");
+
+
+        micBtn.classList.remove("listening");
+
+        micBtn.innerHTML = "🎤";
+
+    };
+
+
+}
+
+
+
+/* START LISTENING */
+
+
+function startListening() {
+
+
+    if (!recognition) {
+
+
+        alert(
+            "Voice input is not supported in this browser. Please use Google Chrome."
+        );
+
+
+        return;
+
+    }
+
+
+    try {
+
+        recognition.start();
+
+    }
+
+    catch (error) {
+
+        console.log(error);
+
+    }
+
+}
+
+
+
+/* =========================
+   ENTER KEY
+========================= */
+
+
+document
+    .getElementById("msg")
+    .addEventListener("keydown", function(event) {
+
+
+        if (event.key === "Enter") {
+
+            send();
+
+        }
+
+    });
+
+
+
+/* =========================
+   SECURITY
+========================= */
+
 
 function escapeHtml(text) {
 
-    const div = document.createElement("div");
+
+    const div =
+        document.createElement("div");
+
 
     div.textContent = text;
 
+
     return div.innerHTML;
+
 }
 
 
-/*
-    ENTER = SEND
-*/
-
-document.getElementById("msg").addEventListener("keydown", function(event) {
-
-    if (event.key === "Enter") {
-        send();
-    }
-
-});
-
 </script>
 
+
 </body>
+
 </html>
