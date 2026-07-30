@@ -1,113 +1,462 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>AI Chatbot</title>
+    <title>IMRAN AI Assistant</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            background: #050816;
+
+            background-image:
+                radial-gradient(circle at top, rgba(0, 255, 255, 0.15), transparent 35%),
+                radial-gradient(circle at bottom right, rgba(120, 0, 255, 0.12), transparent 35%);
+
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            height: 90vh;
+
+            display: flex;
+            flex-direction: column;
+
+            background: rgba(10, 15, 35, 0.72);
+            border: 1px solid rgba(0, 255, 255, 0.25);
+            border-radius: 25px;
+
+            backdrop-filter: blur(18px);
+            box-shadow:
+                0 0 40px rgba(0, 255, 255, 0.08),
+                inset 0 0 30px rgba(255, 255, 255, 0.02);
+
+            overflow: hidden;
+        }
+
+        .header {
+            padding: 25px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 26px;
+            letter-spacing: 2px;
+        }
+
+        .header p {
+            margin-top: 6px;
+            font-size: 12px;
+            opacity: 0.6;
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            margin-top: 10px;
+            font-size: 11px;
+            opacity: 0.75;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #00ff88;
+            box-shadow: 0 0 10px #00ff88;
+        }
+
+        #chat-box {
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+
+        .message {
+            display: flex;
+            margin-bottom: 18px;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message.bot {
+            justify-content: flex-start;
+        }
+
+        .bubble {
+            max-width: 75%;
+            padding: 13px 17px;
+            border-radius: 18px;
+            line-height: 1.6;
+            font-size: 14px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .user .bubble {
+            background: rgba(0, 200, 255, 0.14);
+            border: 1px solid rgba(0, 220, 255, 0.3);
+            border-bottom-right-radius: 5px;
+        }
+
+        .bot .bubble {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom-left-radius: 5px;
+        }
+
+        .label {
+            font-size: 10px;
+            opacity: 0.5;
+            margin-bottom: 5px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .input-area {
+            display: flex;
+            gap: 10px;
+            padding: 18px;
+
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(0, 0, 0, 0.18);
+        }
+
+        #msg {
+            flex: 1;
+            min-width: 0;
+
+            padding: 14px 17px;
+
+            border: 1px solid rgba(0, 220, 255, 0.2);
+            border-radius: 14px;
+
+            outline: none;
+            color: white;
+            background: rgba(255, 255, 255, 0.05);
+
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+        }
+
+        #msg::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        #msg:focus {
+            border-color: rgba(0, 220, 255, 0.6);
+            box-shadow: 0 0 15px rgba(0, 220, 255, 0.1);
+        }
+
+        button {
+            border: none;
+            border-radius: 14px;
+            padding: 0 22px;
+
+            color: white;
+            background: linear-gradient(135deg, #007bff, #6f00ff);
+
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+
+            cursor: pointer;
+
+            transition: 0.25s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(0, 150, 255, 0.35);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        #voice {
+            display: none;
+        }
+
+        .typing {
+            opacity: 0.6;
+            font-style: italic;
+        }
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 0;
+            }
+
+            .container {
+                height: 100vh;
+                border-radius: 0;
+            }
+
+            .bubble {
+                max-width: 88%;
+            }
+
+            .header h1 {
+                font-size: 21px;
+            }
+
+            .input-area {
+                padding: 12px;
+            }
+
+            button {
+                padding: 0 16px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-    <h1>AI Chatbot</h1>
+<div class="container">
 
-    <input
-        id="msg"
-        type="text"
-        placeholder="Type your message..."
-    >
+    <div class="header">
+        <h1>IMRAN AI ASSISTANT</h1>
 
-    <button onclick="send()">Send</button>
+        <p>Intelligent AI • Voice Enabled</p>
 
-    <p id="reply"></p>
+        <div class="status">
+            <span class="dot"></span>
+            AI ONLINE
+        </div>
+    </div>
 
-    <audio id="voice" controls></audio>
 
-    <script>
+    <div id="chat-box">
 
-        async function send() {
+        <div class="message bot">
+            <div>
+                <div class="label">AI ASSISTANT</div>
 
-            const messageInput = document.getElementById("msg");
-            const replyElement = document.getElementById("reply");
+                <div class="bubble">
+                    Hello! 👋 I'm your AI Assistant. How can I help you?
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="input-area">
+
+        <input
+            id="msg"
+            type="text"
+            placeholder="Ask me anything..."
+            autocomplete="off"
+        >
+
+        <button id="sendBtn" onclick="send()">
+            Send
+        </button>
+
+    </div>
+
+</div>
+
+
+<audio id="voice"></audio>
+
+
+<script>
+
+async function send() {
+
+    const input = document.getElementById("msg");
+    const chatBox = document.getElementById("chat-box");
+    const sendBtn = document.getElementById("sendBtn");
+
+    const message = input.value.trim();
+
+    if (!message) {
+        return;
+    }
+
+
+    // USER MESSAGE
+
+    chatBox.innerHTML += `
+        <div class="message user">
+            <div>
+                <div class="label">YOU</div>
+                <div class="bubble">${escapeHtml(message)}</div>
+            </div>
+        </div>
+    `;
+
+
+    input.value = "";
+
+    sendBtn.disabled = true;
+
+
+    // THINKING
+
+    const thinking = document.createElement("div");
+
+    thinking.className = "message bot";
+
+    thinking.innerHTML = `
+        <div>
+            <div class="label">AI ASSISTANT</div>
+            <div class="bubble typing">Thinking...</div>
+        </div>
+    `;
+
+    chatBox.appendChild(thinking);
+
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+
+    try {
+
+        const res = await fetch("/chat", {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                message: message
+            })
+
+        });
+
+
+        const data = await res.json();
+
+
+        thinking.remove();
+
+
+        if (!res.ok) {
+            throw new Error(data.error || "Something went wrong");
+        }
+
+
+        // AI RESPONSE
+
+        chatBox.innerHTML += `
+            <div class="message bot">
+                <div>
+                    <div class="label">AI ASSISTANT</div>
+                    <div class="bubble">${escapeHtml(data.reply)}</div>
+                </div>
+            </div>
+        `;
+
+
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+
+        // PLAY AI VOICE
+
+        if (data.audio_url) {
+
             const voice = document.getElementById("voice");
 
-            const message = messageInput.value.trim();
-
-            if (!message) {
-                return;
-            }
-
-            replyElement.innerText = "Thinking...";
+            voice.src = data.audio_url;
 
             try {
+                await voice.play();
+            }
 
-                const res = await fetch("/chat", {
-
-                    method: "POST",
-
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-
-                    body: JSON.stringify({
-                        message: message
-                    })
-
-                });
-
-                const data = await res.json();
-
-                if (!res.ok) {
-                    throw new Error(data.error || "Something went wrong");
-                }
-
-                // Show AI response
-                replyElement.innerText = data.reply;
-
-                // Play AI voice
-                if (data.audio_url) {
-
-                    voice.src = data.audio_url;
-
-                    voice.style.display = "block";
-
-                    try {
-                        await voice.play();
-                    } catch (error) {
-                        console.log("Autoplay blocked. Press Play.");
-                    }
-
-                }
-
-                // Clear input
-                messageInput.value = "";
-
-            } catch (error) {
-
-                console.error(error);
-
-                replyElement.innerText =
-                    "Error: " + error.message;
-
+            catch (error) {
+                console.log("Browser blocked autoplay:", error);
             }
 
         }
 
+    }
 
-        // Press Enter to send
-        document.getElementById("msg").addEventListener("keydown", function(event) {
+    catch (error) {
 
-            if (event.key === "Enter") {
-                send();
-            }
+        thinking.remove();
 
-        });
+        chatBox.innerHTML += `
+            <div class="message bot">
+                <div>
+                    <div class="label">ERROR</div>
+                    <div class="bubble">
+                        ${escapeHtml(error.message)}
+                    </div>
+                </div>
+            </div>
+        `;
 
-    </script>
+    }
+
+
+    sendBtn.disabled = false;
+
+    input.focus();
+
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+
+/*
+    Prevent HTML injection
+*/
+
+function escapeHtml(text) {
+
+    const div = document.createElement("div");
+
+    div.textContent = text;
+
+    return div.innerHTML;
+}
+
+
+/*
+    ENTER = SEND
+*/
+
+document.getElementById("msg").addEventListener("keydown", function(event) {
+
+    if (event.key === "Enter") {
+        send();
+    }
+
+});
+
+</script>
 
 </body>
-
 </html>
-```
